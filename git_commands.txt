@@ -1,0 +1,141 @@
+SGA 2 - Software Development Practices
+Question 1: Git & GitHub Workflow - Git Commands Used
+Student: Samuel Okwalinga (2024EB01451)
+GitHub Repository: https://github.com/sookwalinga/git-workflow-assignment
+=====================================================================
+
+0. ONE-TIME CONFIGURATION
+---------------------------------------------------------------------
+git config --global user.name "Samuel Okwalinga"
+    Sets the author name that is attached to every commit I make.
+
+git config --global user.email "sookwalinga@gmail.com"
+    Sets the author email, which GitHub uses to link the commits to my account.
+
+
+STEP 1: LOCAL REPOSITORY SETUP
+---------------------------------------------------------------------
+(The folder git-workflow-assignment was created with index.html and
+about.html inside it before running the commands below.)
+
+git init
+    Initializes a new, empty Git repository in the current folder by
+    creating the hidden .git directory.
+
+git branch -M main
+    Renames the default branch from "master" to "main".
+
+git status
+    Shows the current state of the working directory. Here it showed
+    index.html and about.html as untracked files.
+
+
+STEP 2: GIT WORKFLOW EXECUTION
+---------------------------------------------------------------------
+git add .
+    Stages all new and changed files in the folder for the next commit.
+
+git commit -m "Initial commit: add index.html and about.html"
+    Records the initial state of the project as the first commit.
+
+git add index.html
+    Stages only index.html after I added a new paragraph to it.
+
+git commit -m "Update index.html with a new paragraph"
+    Creates the second commit with the change to index.html.
+
+git branch feature
+    Creates a new branch named "feature" from the current commit on main.
+
+git checkout feature
+    Switches the working directory to the feature branch.
+
+git branch
+    Lists all local branches; the * shows the branch I am currently on.
+
+git add about.html
+    Stages the change I made to about.html on the feature branch.
+
+git commit -m "Add contact details to about.html on feature branch"
+    Commits the change to the feature branch only (main is not affected).
+
+git checkout main
+    Switches back to the main branch.
+
+git merge --no-ff feature -m "Merge feature branch into main"
+    Merges the feature branch into main. The --no-ff option forces a merge
+    commit so the branch activity stays visible in the history.
+
+git log --oneline --graph --all
+    Displays the commit history of all branches, one line per commit, with
+    a graph showing where the feature branch split off and merged back.
+
+
+STEP 3: .GITIGNORE IMPLEMENTATION
+---------------------------------------------------------------------
+(I created a .gitignore file and to test
+it, I created error.log and a temp/ folder with notes.txt inside it.)
+
+git status
+    Confirms that error.log and temp/ are not listed as untracked, so Git
+    is ignoring them. Only .gitignore is shown.
+
+git status --ignored
+    Lists the files Git is ignoring, which showed error.log and temp/.
+
+git add .gitignore
+    Stages the .gitignore file.
+
+git commit -m "Add .gitignore to ignore .log files and temp folder"
+    Commits the .gitignore file so the ignore rules are saved in the repo.
+
+
+STEP 4: UNDO OPERATION USING GIT
+---------------------------------------------------------------------
+git add index.html
+    Stages index.html after I added a footer line to it.
+
+git commit -m "Add footer to index.html"
+    Makes the additional commit that will be undone.
+
+git log --oneline -3
+    Shows the last 3 commits to confirm the footer commit is at the top.
+
+git revert HEAD --no-edit
+    Undoes the last commit by creating a new commit that reverses its
+    changes. --no-edit uses the default message without opening an editor.
+    I used revert instead of reset so the undo is kept in the history and
+    is visible on GitHub.
+
+git log --oneline --graph --all
+    Shows the effect of the undo: a new "Revert" commit on top of the
+    footer commit. (cat index.html also confirmed the footer was removed.)
+
+
+STEP 5: GITHUB INTEGRATION
+---------------------------------------------------------------------
+(A public repository named git-workflow-assignment was created on
+GitHub without a README, .gitignore or license.)
+
+git remote add origin https://github.com/sookwalinga/git-workflow-assignment.git
+    Connects the local repository to the GitHub repository and names the
+    connection "origin".
+
+git remote -v
+    Lists the remote connections to confirm the fetch and push URLs.
+
+git push -u origin --all
+    Pushes all local branches (main and feature) to GitHub. -u sets
+    origin as the default upstream so later pushes only need "git push".
+
+
+STEP 6: COMMAND DOCUMENTATION FILE
+---------------------------------------------------------------------
+git add git_commands.txt
+    Stages this documentation file.
+
+git commit -m "Add git_commands.txt documenting all Git commands used"
+    Commits the documentation file to the main branch.
+
+git push
+    Pushes the new commit to GitHub, so the online repository is complete.
